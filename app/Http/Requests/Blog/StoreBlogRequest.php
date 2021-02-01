@@ -26,7 +26,7 @@ class StoreBlogRequest extends FormRequest
         return [
             //
             'title' => 'required|max:255',
-            'body' => 'required|max:255|min:50',
+            'body' => 'required|max:255',
         ];
     }
 }

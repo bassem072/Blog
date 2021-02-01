@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Blog\StoreBlogRequest;
 use App\Http\Requests\Blog\UpdateBlogRequest;
 use App\Http\Resources\BlogResource;
+use App\Mail\Gmail;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BlogController extends Controller
 {
@@ -39,6 +41,13 @@ class BlogController extends Controller
         //dd($data);
 
         $blog = Blog::create($data);
+
+        $details = [
+            'title' => 'You Added Blog Successfully With Title: ' . $blog->title,
+            'body' => $blog->body,
+        ];
+
+        Mail::to(auth()->user()->email)->send(new Gmail($details));
 
         return response(['blog' => new BlogResource($blog), 'message' => 'Created successfully'], 201);
     }

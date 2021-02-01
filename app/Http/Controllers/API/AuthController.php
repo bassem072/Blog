@@ -29,7 +29,7 @@ class AuthController extends Controller
             'body' => 'You Are Successfully Registered To Projects Using Gmail',
         ];
 
-        //Mail::to($user->email)->send(new Gmail($details));
+        Mail::to($user->email)->send(new Gmail($details));
 
         $accessToken = $user->createToken('authToken')->accessToken;
 
